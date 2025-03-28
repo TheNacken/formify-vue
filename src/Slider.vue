@@ -1,72 +1,62 @@
 <script setup lang="ts">
-import { ref, onUnmounted, watch, computed } from "vue";
+import { ref, onUnmounted, watch, computed } from 'vue'
 
-const model = defineModel<number>({ required: true });
+const model = defineModel<number>({ required: true })
 const props = defineProps({
   min: { type: Number, default: 0 },
   max: { type: Number, default: 100 },
   step: { type: Number, default: 1 },
   markers: { type: Array as () => number[], default: () => [] },
-});
+})
 
-const sliderRef = ref<HTMLElement | null>(null);
-const isDragging = ref(false);
-const isHovering = ref(false);
+const sliderRef = ref<HTMLElement | null>(null)
+const isDragging = ref(false)
+const isHovering = ref(false)
 
 // Value validation and stepping
 watch(
   model,
   (newVal) => {
-    const clamped = Math.min(props.max, Math.max(props.min, newVal));
-    const stepped = Math.round(clamped / props.step) * props.step;
-    if (stepped !== newVal) model.value = stepped;
+    const clamped = Math.min(props.max, Math.max(props.min, newVal))
+    const stepped = Math.round(clamped / props.step) * props.step
+    if (stepped !== newVal) model.value = stepped
   },
   { immediate: true },
-);
+)
 
 const calculateValue = (event: MouseEvent) => {
-  if (!sliderRef.value) return model.value;
-  const rect = sliderRef.value.getBoundingClientRect();
-  const rawValue =
-    ((event.clientX - rect.left) / rect.width) * (props.max - props.min) +
-    props.min;
-  return (
-    Math.round(
-      Math.min(props.max, Math.max(props.min, rawValue)) / props.step,
-    ) * props.step
-  );
-};
+  if (!sliderRef.value) return model.value
+  const rect = sliderRef.value.getBoundingClientRect()
+  const rawValue = ((event.clientX - rect.left) / rect.width) * (props.max - props.min) + props.min
+  return Math.round(Math.min(props.max, Math.max(props.min, rawValue)) / props.step) * props.step
+}
 
 // Event handlers
 const handleMouseMove = (event: MouseEvent) => {
-  model.value = calculateValue(event);
-};
+  model.value = calculateValue(event)
+}
 
 const handleMouseUp = () => {
-  isDragging.value = false;
-  window.removeEventListener("mousemove", handleMouseMove);
-  window.removeEventListener("mouseup", handleMouseUp);
-};
+  isDragging.value = false
+  window.removeEventListener('mousemove', handleMouseMove)
+  window.removeEventListener('mouseup', handleMouseUp)
+}
 
 const handleMouseDown = (event: MouseEvent) => {
-  isDragging.value = true;
-  model.value = calculateValue(event);
-  window.addEventListener("mousemove", handleMouseMove);
-  window.addEventListener("mouseup", handleMouseUp);
-};
+  isDragging.value = true
+  model.value = calculateValue(event)
+  window.addEventListener('mousemove', handleMouseMove)
+  window.addEventListener('mouseup', handleMouseUp)
+}
 
-onUnmounted(handleMouseUp);
+onUnmounted(handleMouseUp)
 
 // Position calculations
-const percentage = computed(
-  () => ((model.value - props.min) / (props.max - props.min)) * 100,
-);
+const percentage = computed(() => ((model.value - props.min) / (props.max - props.min)) * 100)
 
 const markerPositions = computed(() =>
-  props.markers.map(
-    (marker) => ((marker - props.min) / (props.max - props.min)) * 100,
-  ),
-);
+  props.markers.map((marker) => ((marker - props.min) / (props.max - props.min)) * 100),
+)
 </script>
 
 <template>
@@ -76,10 +66,7 @@ const markerPositions = computed(() =>
     @mousedown="handleMouseDown"
   >
     <!-- Progress bar -->
-    <div
-      class="h-1 rounded-2xl bg-green-500"
-      :style="{ width: `${percentage}%` }"
-    />
+    <div class="h-1 rounded-2xl bg-green-500" :style="{ width: `${percentage}%` }" />
 
     <!-- Label slot -->
     <div class="absolute -top-9 left-0 select-none">
@@ -93,9 +80,7 @@ const markerPositions = computed(() =>
       :style="{ left: `${position}%` }"
     >
       <div class="h-3 w-px bg-gray-400" />
-      <span
-        class="absolute top-full left-1/2 -translate-x-1/2 text-xs text-gray-500"
-      >
+      <span class="absolute top-full left-1/2 -translate-x-1/2 text-xs text-gray-500">
         {{ props.markers[index] }}
       </span>
     </div>

@@ -1,13 +1,29 @@
 <script setup lang="ts">
-import { InputLabel } from "./index.ts";
+import { InputLabel } from './index.ts'
 
 defineProps({
-  min: Number,
-  max: Number,
-  step: Number,
-  inputId: String,
-});
-const model = defineModel();
+  min: {
+    type: Number,
+    required: false,
+  },
+  max: {
+    type: Number,
+    required: false,
+  },
+  step: {
+    type: Number,
+    required: false,
+  },
+  inputId: {
+    type: String,
+    required: true,
+  },
+  suffix: {
+    type: String,
+    required: false,
+  },
+})
+const model = defineModel()
 </script>
 
 <template>
@@ -27,7 +43,9 @@ const model = defineModel();
         :id="inputId"
         v-model="model"
       />
-      <span class="ml-2">min</span>
+      <span class="ml-2" v-if="suffix">
+        {{ suffix }}
+      </span>
     </div>
   </div>
 </template>

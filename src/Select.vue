@@ -1,16 +1,16 @@
 <script setup lang="ts">
-import { ArrowDropDownIcon } from "./icons";
+import { ArrowDropDownIcon } from './icons'
 
 interface Option {
-  name: string;
-  value: string;
+  name: string
+  value: string
 }
 
-const model = defineModel();
+const model = defineModel()
 
 const props = defineProps<{
-  options: Option[];
-}>();
+  options: Option[]
+}>()
 </script>
 
 <template>
@@ -20,18 +20,12 @@ const props = defineProps<{
       style="-webkit-appearance: none; appearance: none; -moz-appearance: none"
       v-model="model"
     >
-      <option
-        v-for="option in props.options"
-        :key="option.value"
-        :value="option.value"
-      >
+      <option v-for="option in props.options" :key="option.value" :value="option.value">
         {{ option.name }}
       </option>
     </select>
 
-    <span
-      class="pointer-events-none absolute inset-y-0 right-2 flex items-center"
-    >
+    <span class="pointer-events-none absolute inset-y-0 right-2 flex items-center">
       <ArrowDropDownIcon />
     </span>
   </div>

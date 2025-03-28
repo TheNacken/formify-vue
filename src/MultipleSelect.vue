@@ -1,15 +1,13 @@
 <script setup lang="ts">
-import { InputLabel } from "./index.ts";
-import { CancelIcon } from "./icons";
-import { type ModelRef, type Ref, ref } from "vue";
+import { InputLabel } from './index.ts'
+import { CancelIcon } from './icons'
+import { type ModelRef, type Ref, ref } from 'vue'
 
 defineProps({
   inputId: String,
-});
-const model: ModelRef<string[]> = defineModel<string[]>({ default: () => [] });
-const inputRef: Ref<HTMLInputElement | null> = ref<HTMLInputElement | null>(
-  null,
-);
+})
+const model: ModelRef<string[]> = defineModel<string[]>({ default: () => [] })
+const inputRef: Ref<HTMLInputElement | null> = ref<HTMLInputElement | null>(null)
 </script>
 
 <template>
@@ -41,11 +39,11 @@ const inputRef: Ref<HTMLInputElement | null> = ref<HTMLInputElement | null>(
         :id="inputId"
         @keydown.enter="
           (event: Event) => {
-            event.preventDefault();
-            const target = event.target as HTMLInputElement;
+            event.preventDefault()
+            const target = event.target as HTMLInputElement
             if (target.value.trim()) {
-              model.push(target.value);
-              target.value = '';
+              model.push(target.value)
+              target.value = ''
             }
           }
         "

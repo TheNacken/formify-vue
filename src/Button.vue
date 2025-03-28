@@ -1,9 +1,9 @@
 <script setup lang="ts">
 const props = defineProps<{
-  label: string;
-}>();
+  label: string
+}>()
 
-const emit = defineEmits(["click"]);
+const emit = defineEmits(['click'])
 </script>
 
 <template>

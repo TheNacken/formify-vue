@@ -1,7 +1,7 @@
 <script setup lang="ts">
 defineProps({
   inputId: String,
-});
+})
 </script>
 
 <template>

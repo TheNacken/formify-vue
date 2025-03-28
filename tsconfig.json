@@ -7,6 +7,7 @@
     "outDir": "dist",
     "declarationDir": "dist",
     "baseUrl": ".",
+    "sourceMap": true,
     "allowImportingTsExtensions": true,
     "emitDeclarationOnly": true,
     "module": "nodenext",

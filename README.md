@@ -10,6 +10,35 @@
 - **Fast Development**: Utilizes Vite for efficient bundling, hot module replacement, and fast iteration.
 - **Type Safety**: Uses `vue-tsc` for type checking to provide seamless support for TypeScript in `.vue` files.
 
+# Installation
+To install `formify-vue`, you can use npm. Run the following command in your project directory:
+
+```sh
+npm install formify-vue
+```
+
+# Usage
+
+To use `formify-vue` in your Vue 3 project, you need to first import the css file using a global import in your main css file or in your main.js file:
+
+main.js
+```javascript
+import 'formify-vue/style.css';
+```
+main.css
+```css
+@import 'formify-vue/style.css';
+```
+
+Then, you can import the components you need in your Vue components. For example:
+
+```javascript
+import { Button, Checkbox, InputLabel, MultipleSelect, NumberInput, Select, Slider } from 'formify-vue';
+```
+
+Then, you can import the components you need in your Vue components. For example:
+
+```vue
 ## Components
 
 ### Button

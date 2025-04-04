@@ -1,20 +1,24 @@
 <script setup lang="ts">
-import NumberInput from './NumberInput.vue'
-import Checkbox from './Checkbox.vue'
-import MultipleSelect from './MultipleSelect.vue'
-import Select from './Select.vue'
-import Slider from './Slider.vue'
-import { ref } from 'vue'
-
-const sliderValue = ref(0)
+import { NumberInput, Checkbox, MultipleSelect, Slider } from './index'
+import TextInput from '@/TextInput.vue'
 </script>
 
 <template>
-  <NumberInput :min="0" :max="100" :step="1" inputId="number-input"> Percentage</NumberInput>
+  <div>
+    <NumberInput :min="0" :max="100" :step="1" prefix="$" suffix="€" inputId="number-input">
+      Percentage</NumberInput
+    >
+    <NumberInput :min="0" :max="100" :step="1" suffix="€" inputId="number-input">
+      Percentage</NumberInput
+    >
+    <NumberInput :min="0" :max="100" :step="1" prefix="$" inputId="number-input">
+      Percentage</NumberInput
+    >
+    <NumberInput :min="0" :max="100" :step="1" inputId="number-input"> Percentage</NumberInput>
+  </div>
   <Checkbox name="checkbox-input" value="test" input-id="checkbox-input" size="md"></Checkbox>
-  <MultipleSelect input-id="multiple-select-input"></MultipleSelect>
-  <Select :options="[{name: 'test', value: 'test'}]" input-id="select-input"></Select>
-  <Slider v-model="sliderValue" ></Slider>
+  <MultipleSelect input-id="multiple-select-input">Test</MultipleSelect>
+  <Select :options="[{ name: 'test', value: 'test' }]" input-id="select-input"></Select>
+  <Slider></Slider>
+  <TextInput input-id="text-input"></TextInput>
 </template>
-
-<style scoped></style>

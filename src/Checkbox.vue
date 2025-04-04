@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { CheckIcon } from './icons'
-import { computed } from 'vue'
+import { computed, watch } from 'vue'
 import type { Size } from './model/size.ts'
 
-const model = defineModel()
+const model = defineModel<boolean | string[]>({ default: false })
 
 const props = defineProps<{
   name: string
@@ -48,14 +48,14 @@ const onChange = (e: Event) => {
         :value="props.value"
         :id="props.inputId"
         type="checkbox"
-        :checked="Array.isArray(modelValue) ? modelValue.includes(props.value) : modelValue"
+        :checked="Array.isArray(model) ? model.includes(props.value) : model"
         @change="onChange"
         class="cursor-pointer appearance-none rounded-md border-2 border-gray-500 checked:bg-black"
         :class="size"
       />
       <div class="pointer-events-none absolute inset-0 flex items-center justify-center">
         <CheckIcon
-          v-if="Array.isArray(modelValue) ? modelValue.includes(props.value) : modelValue"
+          v-if="Array.isArray(model) ? model.includes(props.value) : model"
           :class="size"
           class="text-white"
         />

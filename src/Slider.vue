@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, onUnmounted, watch, computed } from 'vue'
 
-const model = defineModel<number>({ required: true })
+const model = defineModel<number>({ default: 0 })
 const props = defineProps({
   min: { type: Number, default: 0 },
   max: { type: Number, default: 100 },

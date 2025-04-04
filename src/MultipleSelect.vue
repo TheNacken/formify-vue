@@ -41,10 +41,10 @@ const inputRef: Ref<HTMLInputElement | null> = ref<HTMLInputElement | null>(null
         class="w-[200px] p-2 outline-none"
         type="text"
         :id="inputId"
-        @keydown.enter="
+        @keydown.enter.tab="
           (event: Event) => {
-            event.preventDefault()
             if (inputRef.value.trim()) {
+              event.preventDefault()
               model = [...model, inputRef.value]
               inputRef.value = ''
             }

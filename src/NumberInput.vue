@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import InputLabel from './InputLabel.vue'
+import { InputLabel } from './index'
 
 defineProps({
   min: {
@@ -33,7 +33,7 @@ const model = defineModel<number>({ default: 0 })
 
 <template>
   <div
-    class="relative m-2 h-fit w-[200px] cursor-text rounded-md border-2 border-black/50 p-2 focus-within:border-blue-900"
+    class="relative m-2 mt-3 cursor-text rounded-md border-2 border-black/50 p-2 focus-within:border-blue-900"
     style="background-color: inherit"
   >
     <InputLabel :inputId="inputId">

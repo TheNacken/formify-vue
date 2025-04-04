@@ -12,7 +12,7 @@ const inputRef: Ref<HTMLInputElement | null> = ref<HTMLInputElement | null>(null
 
 <template>
   <div
-    class="relative cursor-text rounded-md border-2 border-black/50 p-2 focus-within:border-blue-900"
+    class="relative m-2 mt-3 cursor-text rounded-md border-2 border-black/50 p-2 focus-within:border-blue-900"
     @click="inputRef?.focus()"
   >
     <div class="flex flex-wrap items-center">

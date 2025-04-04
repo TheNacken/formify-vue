@@ -41,7 +41,7 @@ const onChange = (e: Event) => {
 </script>
 
 <template>
-  <div class="flex items-center">
+  <div class="flex m-2 items-center">
     <div class="relative mr-2 flex items-center" :class="size">
       <input
         :name="props.name"

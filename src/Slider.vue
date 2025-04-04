@@ -62,7 +62,7 @@ const markerPositions = computed(() =>
 <template>
   <div
     ref="sliderRef"
-    class="relative mb-7 h-1 w-full cursor-pointer rounded-2xl bg-gray-500 text-gray-500"
+    class="relative m-2 mx-5 mb-8 h-1 cursor-pointer rounded-2xl bg-gray-500 text-gray-500"
     @mousedown="handleMouseDown"
   >
     <!-- Progress bar -->

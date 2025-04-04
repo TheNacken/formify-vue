@@ -13,7 +13,8 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/formify-vue.js",
       "require": "./dist/formify-vue.umd.cjs"
-    }
+    },
+    "./style.css": "./dist/formify-vue.css"
   },
   "types": "./dist/main.d.ts",
   "scripts": {

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { CheckIcon } from './icons'
-import { computed, watch } from 'vue'
+import { computed } from 'vue'
 import type { Size } from './model/size.ts'
 
 const model = defineModel<boolean | string[]>({ default: false })

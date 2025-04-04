@@ -38,7 +38,6 @@ import { Button, Checkbox, InputLabel, MultipleSelect, NumberInput, Select, Slid
 
 Then, you can import the components you need in your Vue components. For example:
 
-```vue
 ## Components
 
 ### Button

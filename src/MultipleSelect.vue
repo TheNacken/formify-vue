@@ -6,7 +6,7 @@ import { type ModelRef, type Ref, ref } from 'vue'
 defineProps({
   inputId: String,
 })
-const model: ModelRef<string[]> = defineModel<string[]>({ default: () => [] })
+const model: ModelRef<string[]> = defineModel<string[]>({ default: [] })
 const inputRef: Ref<HTMLInputElement | null> = ref<HTMLInputElement | null>(null)
 </script>
 
@@ -26,7 +26,11 @@ const inputRef: Ref<HTMLInputElement | null> = ref<HTMLInputElement | null>(null
       >
         {{ item }}
         <span
-          @click="model.splice(model.indexOf(item), 1)"
+          @click="
+            () => {
+              model = model.filter((i) => i !== item)
+            }
+          "
           class="ml-2 flex h-5 w-5 cursor-pointer items-center justify-center rounded-full text-gray-500"
         >
           <CancelIcon />
@@ -40,10 +44,9 @@ const inputRef: Ref<HTMLInputElement | null> = ref<HTMLInputElement | null>(null
         @keydown.enter="
           (event: Event) => {
             event.preventDefault()
-            const target = event.target as HTMLInputElement
-            if (target.value.trim()) {
-              model.push(target.value)
-              target.value = ''
+            if (inputRef.value.trim()) {
+              model = [...model, inputRef.value]
+              inputRef.value = ''
             }
           }
         "

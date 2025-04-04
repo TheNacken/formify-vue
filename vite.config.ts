@@ -8,29 +8,25 @@ import { resolve } from 'path'
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [
-    vue(),
-    vueDevTools(),
-    tailwindcss(),
-  ],
+  plugins: [vue(), vueDevTools(), tailwindcss()],
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url))
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
   },
   build: {
     lib: {
       entry: resolve(__dirname, './src/index.ts'),
       name: 'Formify Vue',
-      fileName: 'formify-vue'
+      fileName: 'formify-vue',
     },
     rollupOptions: {
       external: ['vue', 'tailwindcss'],
       output: {
         globals: {
-          vue: 'Vue'
-        }
-      }
-    }
-  }
+          vue: 'Vue',
+        },
+      },
+    },
+  },
 })

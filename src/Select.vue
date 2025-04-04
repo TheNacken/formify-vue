@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ArrowDropDownIcon } from './icons'
+import { InputLabel } from './index'
 
 interface Option {
   name: string
@@ -14,7 +15,10 @@ const props = defineProps<{
 </script>
 
 <template>
-  <div class="relative inline-block w-full">
+  <div class="relative m-2 mt-3 inline-block">
+    <InputLabel>
+      <slot />
+    </InputLabel>
     <select
       class="block w-full rounded-md border-2 border-black/50 bg-white p-2 pr-10 focus-within:border-blue-900"
       style="-webkit-appearance: none; appearance: none; -moz-appearance: none"

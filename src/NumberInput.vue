@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { InputLabel } from './index.ts'
+import { InputLabel } from './index'
 
 defineProps({
   min: {
@@ -18,24 +18,33 @@ defineProps({
     type: String,
     required: true,
   },
+  prefix: {
+    type: String,
+    required: false,
+  },
   suffix: {
     type: String,
     required: false,
   },
 })
-const model = defineModel()
+
+const model = defineModel<number>({ default: 0 })
 </script>
 
 <template>
   <div
-    class="relative w-fit cursor-text rounded-md border-2 border-black/50 p-2 focus-within:border-blue-900"
+    class="relative m-2 mt-3 cursor-text rounded-md border-2 border-black/50 p-2 focus-within:border-blue-900"
+    style="background-color: inherit"
   >
-    <div class="flex items-center">
-      <InputLabel :inputId="inputId">
-        <slot />
-      </InputLabel>
+    <InputLabel :inputId="inputId">
+      <slot />
+    </InputLabel>
+    <div class="flex items-center justify-between">
+      <span class="mr-2" v-if="prefix">
+        {{ prefix }}
+      </span>
       <input
-        class="w-[200px] p-2 outline-none"
+        class="w-full bg-[var(--bg-color)] p-1 outline-none"
         type="number"
         :min="min"
         :max="max"

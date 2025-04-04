@@ -3,7 +3,7 @@ import { CheckIcon } from './icons'
 import { computed } from 'vue'
 import type { Size } from './model/size.ts'
 
-const model = defineModel()
+const model = defineModel<boolean | string[]>({ default: false })
 
 const props = defineProps<{
   name: string
@@ -41,21 +41,21 @@ const onChange = (e: Event) => {
 </script>
 
 <template>
-  <div class="flex items-center">
+  <div class="flex m-2 items-center">
     <div class="relative mr-2 flex items-center" :class="size">
       <input
         :name="props.name"
         :value="props.value"
         :id="props.inputId"
         type="checkbox"
-        :checked="Array.isArray(modelValue) ? modelValue.includes(props.value) : modelValue"
+        :checked="Array.isArray(model) ? model.includes(props.value) : model"
         @change="onChange"
         class="cursor-pointer appearance-none rounded-md border-2 border-gray-500 checked:bg-black"
         :class="size"
       />
       <div class="pointer-events-none absolute inset-0 flex items-center justify-center">
         <CheckIcon
-          v-if="Array.isArray(modelValue) ? modelValue.includes(props.value) : modelValue"
+          v-if="Array.isArray(model) ? model.includes(props.value) : model"
           :class="size"
           class="text-white"
         />

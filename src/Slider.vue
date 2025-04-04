@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, onUnmounted, watch, computed } from 'vue'
 
-const model = defineModel<number>({ required: true })
+const model = defineModel<number>({ default: 0 })
 const props = defineProps({
   min: { type: Number, default: 0 },
   max: { type: Number, default: 100 },
@@ -62,7 +62,7 @@ const markerPositions = computed(() =>
 <template>
   <div
     ref="sliderRef"
-    class="relative mb-7 h-1 w-full cursor-pointer rounded-2xl bg-gray-500 text-gray-500"
+    class="relative m-2 mx-5 mb-8 h-1 cursor-pointer rounded-2xl bg-gray-500 text-gray-500"
     @mousedown="handleMouseDown"
   >
     <!-- Progress bar -->

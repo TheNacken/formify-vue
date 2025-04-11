@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { InputLabel } from './index.ts'
 import { CancelIcon } from './icons'
-import { ref, computed, watch, type Ref } from 'vue'
+import { ref, computed, watch, type Ref, ModelRef } from 'vue'
 
 const model: ModelRef<string[]> = defineModel<string[]>({ default: [] })
 
@@ -11,8 +11,15 @@ const props = defineProps({
     type: Array as () => string[],
     default: () => [],
   },
+  allowCustom: {
+    type: Boolean,
+    default: true,
+  },
+  preventDuplicates: {
+    type: Boolean,
+    default: true,
+  },
 })
-
 const inputRef: Ref<HTMLInputElement | null> = ref(null)
 const inputValue = ref('')
 const isInputFocused = ref(false)
@@ -31,7 +38,16 @@ watch([inputValue, isInputFocused, filteredOptions], () => {
 })
 
 const addItem = (item: string) => {
-  model.value = [...model.value, item]
+  const trimmedItem = item.trim()
+  if (!trimmedItem) return
+
+  if (!props.allowCustom && !props.autocompleteOptions.includes(trimmedItem)) {
+    return
+  }
+
+  if (props.preventDuplicates && model.value.includes(trimmedItem)) return
+
+  model.value = [...model.value, trimmedItem]
   inputValue.value = ''
   activeIndex.value = -1
 }
@@ -57,7 +73,7 @@ const onKeyDown = (event: KeyboardEvent) => {
       event.preventDefault()
       if (activeIndex.value >= 0 && activeIndex.value < filteredOptions.value.length) {
         addItem(filteredOptions.value[activeIndex.value])
-      } else if (inputValue.value.trim()) {
+      } else {
         addItem(inputValue.value)
       }
       break
@@ -97,19 +113,13 @@ const onOptionMouseDown = (item: string, event: MouseEvent) => {
       <input
         ref="inputRef"
         v-model="inputValue"
-        class="w-[200px] p-2 outline-none"
+        class="p-2 outline-none"
         type="text"
         :id="inputId"
         @focus="isInputFocused = true"
         @blur="isInputFocused = false"
         @keydown="onKeyDown"
-        @keydown.enter.tab.prevent="
-          () => {
-            if (inputValue.trim()) {
-              addItem(inputValue)
-            }
-          }
-        "
+        @keydown.enter.tab.prevent="addItem(inputValue)"
       />
     </div>
     <ul

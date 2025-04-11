@@ -3,6 +3,7 @@ import { NumberInput, Checkbox, MultipleSelect, Select, Slider, TextInput, Butto
 import { ref } from 'vue'
 
 const multipleSelect = ref<string[]>([])
+const autocompleteSelect = ref<string[]>([])
 </script>
 
 <template>
@@ -19,8 +20,37 @@ const multipleSelect = ref<string[]>([])
       >
       <NumberInput :min="0" :max="100" :step="1" inputId="number-input"> Percentage</NumberInput>
     </div>
-    <Checkbox name="checkbox-input" value="test" input-id="checkbox-input" size="md"></Checkbox>
+    <Checkbox
+      name="checkbox-input-sm"
+      value="test"
+      input-id="checkbox-input-sm"
+      size="sm"
+    ></Checkbox>
+    <Checkbox
+      name="checkbox-input-md"
+      value="test"
+      input-id="checkbox-input-md"
+      size="md"
+    ></Checkbox>
+    <Checkbox
+      name="checkbox-input-lg"
+      value="test"
+      input-id="checkbox-input-lg"
+      size="lg"
+    ></Checkbox>
+    <Checkbox
+      name="checkbox-input-xl"
+      value="test"
+      input-id="checkbox-input-xl"
+      size="xl"
+    ></Checkbox>
     <MultipleSelect input-id="multiple-select-input" v-model="multipleSelect">Test</MultipleSelect>
+    <MultipleSelect
+      input-id="multiple-select-input"
+      v-model="autocompleteSelect"
+      :autocomplete-options="['test', 'test2']"
+      >Test</MultipleSelect
+    >
     <Select
       :options="[
         { name: 'test', value: 'test' },

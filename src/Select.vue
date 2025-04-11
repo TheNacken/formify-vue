@@ -7,7 +7,7 @@ interface Option {
   value: string
 }
 
-const model = defineModel()
+const model = defineModel<string>({ default: '' })
 
 const props = defineProps<{
   options: Option[]

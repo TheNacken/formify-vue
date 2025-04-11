@@ -1,9 +1,11 @@
 <script setup lang="ts">
-import { NumberInput, Checkbox, MultipleSelect, Select, Slider, TextInput, Button } from './index'
+import { Button, Checkbox, MultipleSelect, NumberInput, Select, Slider, TextInput } from './index'
 import { ref } from 'vue'
 
 const multipleSelect = ref<string[]>([])
 const autocompleteSelect = ref<string[]>([])
+const autocompleteDuplicatesSelect = ref<string[]>([])
+const autocompleteNoCustomSelect = ref<string[]>([])
 </script>
 
 <template>
@@ -49,6 +51,20 @@ const autocompleteSelect = ref<string[]>([])
       input-id="multiple-select-input"
       v-model="autocompleteSelect"
       :autocomplete-options="['test', 'test2']"
+      >Test</MultipleSelect
+    >
+    <MultipleSelect
+      input-id="multiple-select-input"
+      v-model="autocompleteDuplicatesSelect"
+      :autocomplete-options="['test', 'test2']"
+      :prevent-duplicates="false"
+      >Test</MultipleSelect
+    >
+    <MultipleSelect
+      input-id="multiple-select-input"
+      v-model="autocompleteNoCustomSelect"
+      :autocomplete-options="['test', 'test2']"
+      :allow-custom="false"
       >Test</MultipleSelect
     >
     <Select

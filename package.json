@@ -4,7 +4,8 @@
   "private": false,
   "type": "module",
   "files": [
-    "dist"
+    "dist",
+    "LICENSE"
   ],
   "main": "dist/formify-vue.umd.cjs",
   "module": "dist/formify-vue.js",
@@ -51,5 +52,6 @@
     "vite-plugin-vue-devtools": "^7.7.2",
     "vitest": "^3.0.9",
     "vue-tsc": "^2.2.8"
-  }
+  },
+  "license": "MIT"
 }

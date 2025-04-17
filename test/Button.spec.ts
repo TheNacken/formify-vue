@@ -15,7 +15,9 @@ describe('ButtonComponent', () => {
   })
 
   it('emits the click event', async () => {
-    const wrapper = shallowMount(Button)
+    const wrapper = shallowMount(Button, {
+      props: { label: '' },
+    })
 
     await wrapper.find('input').trigger('click')
 

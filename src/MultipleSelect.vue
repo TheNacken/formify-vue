@@ -19,9 +19,25 @@ const props = defineProps({
     type: Boolean,
     default: true,
   },
+  searchTerm: {
+    type: String,
+    default: '',
+  },
 })
+const emit = defineEmits<(e: 'update:searchTerm', value: string) => void>()
 const inputRef: Ref<HTMLInputElement | null> = ref(null)
-const inputValue = ref('')
+const inputValue = ref(props.searchTerm)
+
+watch(inputValue, (val) => {
+  emit('update:searchTerm', val)
+})
+watch(
+  () => props.searchTerm,
+  (val) => {
+    if (val !== inputValue.value) inputValue.value = val
+  },
+)
+
 const isInputFocused = ref(false)
 const activeIndex = ref(-1)
 

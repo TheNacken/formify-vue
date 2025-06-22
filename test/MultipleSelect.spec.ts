@@ -196,4 +196,30 @@ describe('MultipleSelectComponent', () => {
 
     expect(wrapper.html()).toContain('OptionB')
   })
+
+  it('emits update:searchTerm when typing in the input', async () => {
+    const wrapper = mount(MultipleSelect, {
+      props: { inputId: 'search', autocompleteOptions: [] },
+    })
+    const input = wrapper.find('input')
+    // type a value and assert emission count and payload
+    await input.setValue('test')
+    const emitted1 = wrapper.emitted('update:searchTerm')
+    expect(emitted1).toHaveLength(1)
+    expect(emitted1![0]).toEqual(['test'])
+    // clear the input and verify another emission with empty string
+    await input.setValue('')
+    const emitted2 = wrapper.emitted('update:searchTerm')
+    expect(emitted2).toHaveLength(2)
+    expect(emitted2![1]).toEqual([''])
+  })
+
+  it('updates input value when searchTerm prop changes', async () => {
+    const wrapper = mount(MultipleSelect, {
+      props: { inputId: 'search', searchTerm: 'initial', autocompleteOptions: [] },
+    })
+    expect(wrapper.find('input').element.value).toBe('initial')
+    await wrapper.setProps({ searchTerm: 'newValue' })
+    expect(wrapper.find('input').element.value).toBe('newValue')
+  })
 })

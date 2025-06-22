@@ -1,6 +1,7 @@
 import { describe, expect, it, vi, beforeAll, afterEach, afterAll } from 'vitest'
 import { mount, shallowMount } from '@vue/test-utils'
 import { MultipleSelect } from '../src'
+import type { VueWrapper } from '@vue/test-utils'
 import { nextTick } from 'vue'
 
 describe('MultipleSelectComponent', () => {
@@ -22,7 +23,7 @@ describe('MultipleSelectComponent', () => {
   })
   afterEach(() => vi.restoreAllMocks())
 
-  async function setInputValue(wrapper: any, value: string) {
+  async function setInputValue(wrapper: VueWrapper<any>, value: string) {
     const input = wrapper.find('input')
     input.setValue(value)
     await input.trigger('input')

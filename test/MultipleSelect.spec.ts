@@ -1,14 +1,23 @@
-import { describe, expect, it, vi, beforeAll, afterEach } from 'vitest'
+import { describe, expect, it, vi, beforeAll, afterEach, afterAll } from 'vitest'
 import { mount, shallowMount } from '@vue/test-utils'
 import { MultipleSelect } from '../src'
 import { nextTick } from 'vue'
 
 describe('MultipleSelectComponent', () => {
+  let originalScrollIntoView: typeof HTMLElement.prototype.scrollIntoView
   beforeAll(() => {
+    originalScrollIntoView = HTMLElement.prototype.scrollIntoView
     Object.defineProperty(HTMLElement.prototype, 'scrollIntoView', {
       configurable: true,
       writable: true,
       value: () => {},
+    })
+  })
+  afterAll(() => {
+    Object.defineProperty(HTMLElement.prototype, 'scrollIntoView', {
+      configurable: true,
+      writable: true,
+      value: originalScrollIntoView,
     })
   })
   afterEach(() => vi.restoreAllMocks())

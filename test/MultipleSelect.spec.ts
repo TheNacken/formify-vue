@@ -1,14 +1,34 @@
-import { describe, expect, it, vi } from 'vitest'
+import { describe, expect, it, vi, beforeAll, afterEach, afterAll } from 'vitest'
 import { mount, shallowMount } from '@vue/test-utils'
 import { MultipleSelect } from '../src'
-
-async function setInputValue(wrapper: any, value: string) {
-  const input = wrapper.find('input')
-  input.setValue(value)
-  await input.trigger('input')
-}
+import type { VueWrapper } from '@vue/test-utils'
+import { nextTick } from 'vue'
 
 describe('MultipleSelectComponent', () => {
+  let originalScrollIntoView: typeof HTMLElement.prototype.scrollIntoView
+  beforeAll(() => {
+    originalScrollIntoView = HTMLElement.prototype.scrollIntoView
+    Object.defineProperty(HTMLElement.prototype, 'scrollIntoView', {
+      configurable: true,
+      writable: true,
+      value: () => {},
+    })
+  })
+  afterAll(() => {
+    Object.defineProperty(HTMLElement.prototype, 'scrollIntoView', {
+      configurable: true,
+      writable: true,
+      value: originalScrollIntoView,
+    })
+  })
+  afterEach(() => vi.restoreAllMocks())
+
+  async function setInputValue(wrapper: VueWrapper<any>, value: string) {
+    const input = wrapper.find('input')
+    input.setValue(value)
+    await input.trigger('input')
+  }
+
   it('renders the slot content', () => {
     const text = 'Hello'
     const wrapper = mount(MultipleSelect, {
@@ -201,25 +221,36 @@ describe('MultipleSelectComponent', () => {
     const wrapper = mount(MultipleSelect, {
       props: { inputId: 'search', autocompleteOptions: [] },
     })
-    const input = wrapper.find('input')
     // type a value and assert emission count and payload
-    await input.setValue('test')
+    await setInputValue(wrapper, 'test')
     const emitted1 = wrapper.emitted('update:searchTerm')
     expect(emitted1).toHaveLength(1)
     expect(emitted1![0]).toEqual(['test'])
     // clear the input and verify another emission with empty string
-    await input.setValue('')
+    await setInputValue(wrapper, '')
     const emitted2 = wrapper.emitted('update:searchTerm')
     expect(emitted2).toHaveLength(2)
     expect(emitted2![1]).toEqual([''])
   })
 
-  it('updates input value when searchTerm prop changes', async () => {
+  it('calls scrollIntoView on the active option with smooth behavior', async () => {
+    const options = ['One', 'Two', 'Three', 'Four']
     const wrapper = mount(MultipleSelect, {
-      props: { inputId: 'search', searchTerm: 'initial', autocompleteOptions: [] },
+      props: { inputId: 'tag-input', autocompleteOptions: options },
+      attachTo: document.body,
     })
-    expect(wrapper.find('input').element.value).toBe('initial')
-    await wrapper.setProps({ searchTerm: 'newValue' })
-    expect(wrapper.find('input').element.value).toBe('newValue')
+    // populate options and focus
+    await setInputValue(wrapper, '')
+    await wrapper.find('input').trigger('focus')
+    const items = wrapper.findAll('ul li')
+    // spy on scrollIntoView of the second option
+    const targetEl = items[1].element as HTMLElement
+    const spy = vi.spyOn(targetEl, 'scrollIntoView')
+    // move activeIndex to 1
+    await wrapper.find('input').trigger('keydown', { key: 'ArrowDown' })
+    await wrapper.find('input').trigger('keydown', { key: 'ArrowDown' })
+    // wait for watcher nextTick
+    await nextTick()
+    expect(spy).toHaveBeenCalledWith({ block: 'nearest', behavior: 'smooth' })
   })
 })

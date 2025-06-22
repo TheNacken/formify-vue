@@ -202,9 +202,16 @@ describe('MultipleSelectComponent', () => {
       props: { inputId: 'search', autocompleteOptions: [] },
     })
     const input = wrapper.find('input')
+    // type a value and assert emission count and payload
     await input.setValue('test')
-    expect(wrapper.emitted('update:searchTerm')).toBeTruthy()
-    expect(wrapper.emitted('update:searchTerm')![0]).toEqual(['test'])
+    const emitted1 = wrapper.emitted('update:searchTerm')
+    expect(emitted1).toHaveLength(1)
+    expect(emitted1![0]).toEqual(['test'])
+    // clear the input and verify another emission with empty string
+    await input.setValue('')
+    const emitted2 = wrapper.emitted('update:searchTerm')
+    expect(emitted2).toHaveLength(2)
+    expect(emitted2![1]).toEqual([''])
   })
 
   it('updates input value when searchTerm prop changes', async () => {

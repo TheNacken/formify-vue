@@ -165,7 +165,12 @@ A multi-select component featuring a customizable input field, allowing for dyna
 - Type: `string[]`
 - Description: Binds the array of selected items.
 
-**Usage:**
+**v-model:searchTerm:**
+
+- Type: `string`
+- Description: Binds the current search term typed in the input, for custom logic or display.
+
+**Usage with searchTerm:**
 
 ```vue
 <script setup>
@@ -173,13 +178,20 @@ import { MultipleSelect } from 'formify-vue'
 import { ref } from 'vue'
 
 const selectedItems = ref([])
+const searchValue = ref('')
 const options = ['Option 1', 'Option 2', 'Option 3']
 </script>
 
 <template>
-  <MultipleSelect inputId="multi-select" v-model="selectedItems" :autocompleteOptions="options"
-    >Select Items</MultipleSelect
+  <MultipleSelect
+    inputId="multi-select"
+    v-model="selectedItems"
+    v-model:searchTerm="searchValue"
+    :autocompleteOptions="options"
   >
+    Select Items
+  </MultipleSelect>
+  <p>Current search term: {{ searchValue }}</p>
 </template>
 ```
 

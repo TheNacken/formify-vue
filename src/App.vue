@@ -64,7 +64,7 @@ const searchTermDemo = ref('')
     <MultipleSelect
       input-id="multiple-select-input"
       v-model="autocompleteNoCustomSelect"
-      :autocomplete-options="['test', 'test2']"
+      :autocomplete-options="['test', 'test2', 'test3', 'test4', 'test5', 'test6', 'test7']"
       :allow-custom="false"
       >Test</MultipleSelect
     >

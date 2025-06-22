@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { InputLabel } from './index.ts'
 import { CancelIcon } from './icons'
-import { ref, computed, watch, type Ref, ModelRef } from 'vue'
+import { ref, computed, watch, type Ref, ModelRef, nextTick } from 'vue'
 
 const model: ModelRef<string[]> = defineModel<string[]>({ default: [] })
 
@@ -40,6 +40,7 @@ watch(
 
 const isInputFocused = ref(false)
 const activeIndex = ref(-1)
+const optionsListRef: Ref<HTMLUListElement | null> = ref(null)
 
 const filteredOptions = computed(() =>
   props.autocompleteOptions.filter(
@@ -51,6 +52,16 @@ const filteredOptions = computed(() =>
 
 watch([inputValue, isInputFocused, filteredOptions], () => {
   activeIndex.value = -1
+})
+watch(activeIndex, async (newIndex) => {
+  if (newIndex < 0) return
+  await nextTick()
+  const list = optionsListRef.value
+  if (!list) return
+  const optionEl = list.children[newIndex] as HTMLElement
+  if (optionEl && typeof optionEl.scrollIntoView === 'function') {
+    optionEl.scrollIntoView({ block: 'nearest' })
+  }
 })
 
 const addItem = (item: string) => {
@@ -139,6 +150,7 @@ const onOptionMouseDown = (item: string, event: MouseEvent) => {
       />
     </div>
     <ul
+      ref="optionsListRef"
       v-if="isInputFocused && filteredOptions.length"
       class="absolute left-0 z-10 mt-1 max-h-40 w-full overflow-auto rounded-md border border-gray-300 bg-white shadow-lg"
     >

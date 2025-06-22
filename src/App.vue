@@ -6,6 +6,7 @@ const multipleSelect = ref<string[]>([])
 const autocompleteSelect = ref<string[]>([])
 const autocompleteDuplicatesSelect = ref<string[]>([])
 const autocompleteNoCustomSelect = ref<string[]>([])
+const searchTermDemo = ref('')
 </script>
 
 <template>
@@ -75,6 +76,18 @@ const autocompleteNoCustomSelect = ref<string[]>([])
       input-id="select-input"
       >Test</Select
     >
+    <div class="m-4">
+      <label for="search-term-demo" class="mb-2 block font-semibold">Search-term demo:</label>
+      <MultipleSelect
+        input-id="search-term-demo"
+        v-model="multipleSelect"
+        v-model:searchTerm="searchTermDemo"
+        :autocomplete-options="['Apple', 'Banana', 'Cherry']"
+      >
+        Type to filter
+      </MultipleSelect>
+      <p class="mt-2">Currently typing: {{ searchTermDemo }}</p>
+    </div>
     <Slider></Slider>
     <Slider :max="100" :min="0" :step="1" :markers="[0, 25, 50, 75, 100]"></Slider>
     <TextInput class="h-50" input-id="text-input"></TextInput>

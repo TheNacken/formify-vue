@@ -196,4 +196,23 @@ describe('MultipleSelectComponent', () => {
 
     expect(wrapper.html()).toContain('OptionB')
   })
+
+  it('emits update:searchTerm when typing in the input', async () => {
+    const wrapper = mount(MultipleSelect, {
+      props: { inputId: 'search', autocompleteOptions: [] },
+    })
+    const input = wrapper.find('input')
+    await input.setValue('test')
+    expect(wrapper.emitted('update:searchTerm')).toBeTruthy()
+    expect(wrapper.emitted('update:searchTerm')![0]).toEqual(['test'])
+  })
+
+  it('updates input value when searchTerm prop changes', async () => {
+    const wrapper = mount(MultipleSelect, {
+      props: { inputId: 'search', searchTerm: 'initial', autocompleteOptions: [] },
+    })
+    expect(wrapper.find('input').element.value).toBe('initial')
+    await wrapper.setProps({ searchTerm: 'newValue' })
+    expect(wrapper.find('input').element.value).toBe('newValue')
+  })
 })

@@ -60,7 +60,7 @@ watch(activeIndex, async (newIndex) => {
   if (!list) return
   const optionEl = list.children[newIndex] as HTMLElement
   if (optionEl && typeof optionEl.scrollIntoView === 'function') {
-    optionEl.scrollIntoView({ block: 'nearest' })
+    optionEl.scrollIntoView({ block: 'nearest', behavior: 'smooth' })
   }
 })
 

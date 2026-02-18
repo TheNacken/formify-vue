@@ -15,8 +15,7 @@
       {
         "assets": ["dist.zip"]
       }
-    ],
-    "@semantic-release/git"
+    ]
   ],
   "preset": "angular"
 }

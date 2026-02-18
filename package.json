@@ -1,6 +1,6 @@
 {
   "name": "formify-vue",
-  "version": "1.9.0",
+  "version": "0.0.0-semantic-release",
   "private": false,
   "type": "module",
   "files": [
